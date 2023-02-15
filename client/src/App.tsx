@@ -28,13 +28,14 @@ function App() {
     try {
       const { data: comments } = await axios.post(`http://localhost:4001/posts/${postId}/comments`, { content });
       e.target.elements[0].value = '';
+      fetchPosts()
     } catch (err) {
       console.log(err)
     }
   }
 
   async function fetchPosts() {
-    const { data } = await axios.get('http://localhost:4000/posts')
+    const { data } = await axios.get('http://localhost:4002/posts')
 
     setPosts(data)
   }
@@ -48,8 +49,9 @@ function App() {
     e.preventDefault();
     try {
       const { data: newPost } = await axios.post('http://localhost:4000/posts', { title });
-      setPosts((oldPosts: any) => ({ ...oldPosts, [newPost.id]: { ...newPost } }))
+      // setPosts((oldPosts: any) => ({ ...oldPosts, [newPost.id]: { ...newPost } }))
       setTitle('');
+      fetchPosts()
     } catch (err) {
       console.log(err);
     }
